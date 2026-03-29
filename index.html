@@ -8,55 +8,46 @@
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
 	<style>
-	/* Filter */
-
+	/* show header */
 	#header {
 		display: block !important;
-	}
-	
-	#header h1 {
-	  font-size: 40px;
-	  text-align: center;
-	}
-	
-	#filters {
-	  text-align: center;
-	  margin-top: 10px;
-	}
-	
-	#filters input {
-	  padding: 8px;
-	  margin: 5px;
-	}
-	#filters {
-		padding: 10px 20px;
+		padding-top: 20px;
 		text-align: center;
+	}
+
+	#header h1 {
+		font-size: 36px;
+		color: #fff;
+		margin-bottom: 10px;
+	}
+
+	/* filter bar */
+	#filters {
+		text-align: center;
+		margin: 10px 0 20px 0;
 	}
 	#filters input {
 		margin: 5px;
 		padding: 8px;
+		border-radius: 4px;
+		border: 1px solid #888;
 	}
 
-	/* Text inside image */
-	.thumb {
-		position: relative;
-	}
-
+	/* text inside image */
 	.thumb h2 {
 		position: absolute;
-		bottom: 35px;
+		bottom: 30px;
 		left: 10px;
 		color: white;
-		text-shadow: 0 0 5px black;
+		text-shadow: 0 0 6px black;
 		font-size: 18px;
 	}
-
 	.thumb p {
 		position: absolute;
 		bottom: 10px;
 		left: 10px;
 		color: white;
-		text-shadow: 0 0 5px black;
+		text-shadow: 0 0 6px black;
 		font-size: 14px;
 	}
 	</style>
@@ -68,8 +59,7 @@
 
 	<!-- Header -->
 	<header id="header">
-		<h1><strong>ed’s movie</strong></h1>
-
+		<h1>ed’s movie</h1>
 		<div id="filters">
 			<input type="text" id="filter-name" placeholder="Name">
 			<input type="number" id="filter-year" placeholder="Year">
@@ -81,25 +71,19 @@
 	<div id="main">
 
 		<article class="thumb" data-name="project1" data-year="2023" data-rate="8">
-			<div class="image">
-				<img src="images/thumbs/01.jpg" alt="" />
-			</div>
+			<div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
 			<h2>Project 1</h2>
 			<p>2023 | Rate: 8</p>
 		</article>
 
 		<article class="thumb" data-name="project2" data-year="2022" data-rate="6">
-			<div class="image">
-				<img src="images/thumbs/02.jpg" alt="" />
-			</div>
+			<div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
 			<h2>Project 2</h2>
 			<p>2022 | Rate: 6</p>
 		</article>
 
 		<article class="thumb" data-name="project3" data-year="2024" data-rate="9">
-			<div class="image">
-				<img src="images/thumbs/03.jpg" alt="" />
-			</div>
+			<div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
 			<h2>Project 3</h2>
 			<p>2024 | Rate: 9</p>
 		</article>
@@ -108,7 +92,6 @@
 
 </div>
 
-<!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
@@ -119,7 +102,6 @@
 const nameInput = document.getElementById('filter-name');
 const yearInput = document.getElementById('filter-year');
 const rateInput = document.getElementById('filter-rate');
-
 const items = document.querySelectorAll('.thumb');
 
 function filter() {
@@ -128,16 +110,13 @@ function filter() {
 	const rate = rateInput.value;
 
 	items.forEach(item => {
-		const itemName = item.dataset.name.toLowerCase();
-		const itemYear = item.dataset.year;
-		const itemRate = item.dataset.rate;
-
+		const n = item.dataset.name.toLowerCase();
+		const y = item.dataset.year;
+		const r = item.dataset.rate;
 		let show = true;
-
-		if (name && !itemName.includes(name)) show = false;
-		if (year && itemYear !== year) show = false;
-		if (rate && itemRate < rate) show = false;
-
+		if (name && !n.includes(name)) show = false;
+		if (year && y !== year) show = false;
+		if (rate && r < rate) show = false;
 		item.style.display = show ? '' : 'none';
 	});
 }
