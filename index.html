@@ -24,29 +24,24 @@
 	/* filter bar */
 	#filters {
 	    text-align: center;
-	    margin: 10px 0 20px 0;
+	    padding: 20px 0 10px 0;
+	    background: #1f2224;
 	    position: relative;
-	    z-index: 10;
+	    z-index: 100;
 	}
 	#filters input {
 	    margin: 5px;
 	    padding: 8px 12px;
 	    border-radius: 4px;
-	    border: 1px solid #888;
-	    background: rgba(255, 255, 255, 0.15) !important;
-	    color: #fff !important;
+	    border: 1px solid #555;
+	    background: #34363b;
+	    color: #fff;
 	    font-size: 14px;
-	    outline: none;
-	    display: inline-block !important;
-	    visibility: visible !important;
-	    opacity: 1 !important;
+	    width: 150px;
+	    display: inline-block;
 	}
 	#filters input::placeholder {
-	    color: rgba(255, 255, 255, 0.6);
-	}
-	#filters input:focus {
-	    border-color: #fff;
-	    background: rgba(255, 255, 255, 0.25) !important;
+	    color: #888;
 	}
 
 	/* text inside image */
@@ -94,13 +89,13 @@
 
 	<!-- Header -->
 	<header id="header">
-		<h1>ed’s movie</h1>
-		<div id="filters">
-			<input type="text" id="filter-name" placeholder="Name">
-			<input type="number" id="filter-year" placeholder="Year">
-			<input type="number" id="filter-rate" placeholder="Rate (1-10)">
-		</div>
+	    <h1>ed's movie</h1>
 	</header>
+	<div id="filters">
+	    <input type="text" id="filter-name" placeholder="Name">
+	    <input type="number" id="filter-year" placeholder="Year">
+	    <input type="number" id="filter-rate" placeholder="Rate (1-10)">
+	</div>
 
 	<!-- Main -->
 	<div id="main">
