@@ -1,60 +1,105 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>My Site</title>
+  <title>ed’s movie</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+    /* Title */
+    .title {
+      text-align: center;
+      font-size: 48px;
+      font-weight: bold;
+      padding: 40px 0 20px 0;
+    }
+
+    /* Filter bar */
+    .filter-bar {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .filter-bar input {
+      margin: 5px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    /* Grid */
+    #main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0;
+    }
+
+    /* Blocks */
+    .thumb {
+      background: #1c1c1c;
+      border: 1px solid #333;
+      padding: 10px;
+    }
+
+    .thumb img {
+      width: 100%;
+      display: block;
+    }
+
+    .thumb h2 {
+      margin: 10px 0 5px;
+    }
+
+    .thumb p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="wrapper">
+<div class="title">ed’s movie</div>
 
-  <!-- Header -->
-  <header id="header">
-    <h1><strong>My Portfolio</strong></h1>
-  </header>
+<div class="filter-bar">
+  <input type="text" id="filter-name" placeholder="Name">
+  <input type="number" id="filter-year" placeholder="Year">
+  <input type="number" id="filter-rate" placeholder="Min Rate (1-10)">
+</div>
 
-  <!-- Filter -->
-  <div style="padding: 1rem;">
-    <input type="text" id="filter-name" placeholder="Name">
-    <input type="number" id="filter-year" placeholder="Year">
-    <input type="number" id="filter-rate" placeholder="Min Rate (1-10)">
+<div id="main">
+
+  <div class="thumb" data-name="project1" data-year="2023" data-rate="8">
+    <img src="images/thumbs/01.jpg">
+    <h2>Project 1</h2>
+    <p>Year: 2023</p>
+    <p>Rate: 8</p>
   </div>
 
-  <!-- Main -->
-  <div id="main">
+  <div class="thumb" data-name="project2" data-year="2022" data-rate="6">
+    <img src="images/thumbs/02.jpg">
+    <h2>Project 2</h2>
+    <p>Year: 2022</p>
+    <p>Rate: 6</p>
+  </div>
 
-    <article class="thumb" data-name="project1" data-year="2023" data-rate="8">
-      <div class="image">
-        <img src="images/thumbs/01.jpg" />
-      </div>
-      <h2>Project 1</h2>
-      <p>Sample description</p>
-    </article>
-
-    <article class="thumb" data-name="project2" data-year="2022" data-rate="6">
-      <div class="image">
-        <img src="images/thumbs/02.jpg" />
-      </div>
-      <h2>Project 2</h2>
-      <p>Sample description</p>
-    </article>
-
-    <article class="thumb" data-name="project3" data-year="2023" data-rate="9">
-      <div class="image">
-        <img src="images/thumbs/03.jpg" />
-      </div>
-      <h2>Project 3</h2>
-      <p>Sample description</p>
-    </article>
-
+  <div class="thumb" data-name="project3" data-year="2023" data-rate="9">
+    <img src="images/thumbs/03.jpg">
+    <h2>Project 3</h2>
+    <p>Year: 2023</p>
+    <p>Rate: 9</p>
   </div>
 
 </div>
 
-<!-- Scripts -->
 <script>
 const nameInput = document.getElementById('filter-name');
 const yearInput = document.getElementById('filter-year');
