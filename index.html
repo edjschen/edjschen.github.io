@@ -1,104 +1,100 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>ed’s movie</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>ed’s movie</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-    }
+	<style>
+	/* Filter */
+	#filters {
+		padding: 10px 20px;
+		text-align: center;
+	}
+	#filters input {
+		margin: 5px;
+		padding: 8px;
+	}
 
-    /* Title */
-    .title {
-      text-align: center;
-      font-size: 48px;
-      font-weight: bold;
-      padding: 40px 0 20px 0;
-    }
+	/* Text inside image */
+	.thumb {
+		position: relative;
+	}
 
-    /* Filter bar */
-    .filter-bar {
-      text-align: center;
-      padding: 20px;
-    }
+	.thumb h2 {
+		position: absolute;
+		bottom: 35px;
+		left: 10px;
+		color: white;
+		text-shadow: 0 0 5px black;
+		font-size: 18px;
+	}
 
-    .filter-bar input {
-      margin: 5px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    /* Grid */
-    #main {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 0;
-    }
-
-    /* Blocks */
-    .thumb {
-      background: #1c1c1c;
-      border: 1px solid #333;
-      padding: 10px;
-    }
-
-    .thumb img {
-      width: 100%;
-      display: block;
-    }
-
-    .thumb h2 {
-      margin: 10px 0 5px;
-    }
-
-    .thumb p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: #ccc;
-    }
-  </style>
+	.thumb p {
+		position: absolute;
+		bottom: 10px;
+		left: 10px;
+		color: white;
+		text-shadow: 0 0 5px black;
+		font-size: 14px;
+	}
+	</style>
 </head>
 
-<body>
+<body class="is-preload">
 
-<div class="title">ed’s movie</div>
+<div id="wrapper">
 
-<div class="filter-bar">
-  <input type="text" id="filter-name" placeholder="Name">
-  <input type="number" id="filter-year" placeholder="Year">
-  <input type="number" id="filter-rate" placeholder="Min Rate (1-10)">
+	<!-- Header -->
+	<header id="header">
+		<h1><strong>ed’s movie</strong></h1>
+
+		<div id="filters">
+			<input type="text" id="filter-name" placeholder="Name">
+			<input type="number" id="filter-year" placeholder="Year">
+			<input type="number" id="filter-rate" placeholder="Rate (1-10)">
+		</div>
+	</header>
+
+	<!-- Main -->
+	<div id="main">
+
+		<article class="thumb" data-name="project1" data-year="2023" data-rate="8">
+			<div class="image">
+				<img src="images/thumbs/01.jpg" alt="" />
+			</div>
+			<h2>Project 1</h2>
+			<p>2023 | Rate: 8</p>
+		</article>
+
+		<article class="thumb" data-name="project2" data-year="2022" data-rate="6">
+			<div class="image">
+				<img src="images/thumbs/02.jpg" alt="" />
+			</div>
+			<h2>Project 2</h2>
+			<p>2022 | Rate: 6</p>
+		</article>
+
+		<article class="thumb" data-name="project3" data-year="2024" data-rate="9">
+			<div class="image">
+				<img src="images/thumbs/03.jpg" alt="" />
+			</div>
+			<h2>Project 3</h2>
+			<p>2024 | Rate: 9</p>
+		</article>
+
+	</div>
+
 </div>
 
-<div id="main">
-
-  <div class="thumb" data-name="project1" data-year="2023" data-rate="8">
-    <img src="images/thumbs/01.jpg">
-    <h2>Project 1</h2>
-    <p>Year: 2023</p>
-    <p>Rate: 8</p>
-  </div>
-
-  <div class="thumb" data-name="project2" data-year="2022" data-rate="6">
-    <img src="images/thumbs/02.jpg">
-    <h2>Project 2</h2>
-    <p>Year: 2022</p>
-    <p>Rate: 6</p>
-  </div>
-
-  <div class="thumb" data-name="project3" data-year="2023" data-rate="9">
-    <img src="images/thumbs/03.jpg">
-    <h2>Project 3</h2>
-    <p>Year: 2023</p>
-    <p>Rate: 9</p>
-  </div>
-
-</div>
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
 
 <script>
 const nameInput = document.getElementById('filter-name');
@@ -108,23 +104,23 @@ const rateInput = document.getElementById('filter-rate');
 const items = document.querySelectorAll('.thumb');
 
 function filter() {
-  const name = nameInput.value.toLowerCase();
-  const year = yearInput.value;
-  const rate = rateInput.value;
+	const name = nameInput.value.toLowerCase();
+	const year = yearInput.value;
+	const rate = rateInput.value;
 
-  items.forEach(item => {
-    const itemName = item.dataset.name.toLowerCase();
-    const itemYear = item.dataset.year;
-    const itemRate = item.dataset.rate;
+	items.forEach(item => {
+		const itemName = item.dataset.name.toLowerCase();
+		const itemYear = item.dataset.year;
+		const itemRate = item.dataset.rate;
 
-    let show = true;
+		let show = true;
 
-    if (name && !itemName.includes(name)) show = false;
-    if (year && itemYear !== year) show = false;
-    if (rate && itemRate < rate) show = false;
+		if (name && !itemName.includes(name)) show = false;
+		if (year && itemYear !== year) show = false;
+		if (rate && itemRate < rate) show = false;
 
-    item.style.display = show ? 'block' : 'none';
-  });
+		item.style.display = show ? '' : 'none';
+	});
 }
 
 nameInput.addEventListener('input', filter);
