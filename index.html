@@ -1,79 +1,193 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>ed’s movie</title>
+	<title>ed's movie</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+ 
 	<style>
 	/* show header */
 	#header {
 		display: block !important;
-		padding-top: 20px;
+		padding-top: 28px;
 		text-align: center;
 	}
-
+ 
 	#header h1 {
-		font-size: 36px;
+		font-family: 'Cormorant Garamond', serif;
+		font-size: 42px;
+		font-weight: 300;
+		font-style: italic;
 		color: #fff;
+		letter-spacing: 0.12em;
 		margin-bottom: 10px;
 	}
-
+ 
 	/* filter bar */
 	#filters {
 	    text-align: center;
-	    padding: 20px 0 10px 0;
+	    padding: 20px 0 14px 0;
 	    background: #1f2224;
 	    position: relative;
 	    z-index: 100;
 	}
 	#filters input {
 	    margin: 5px;
-	    padding: 8px 12px;
-	    border-radius: 4px;
-	    border: 1px solid #555;
-	    background: #34363b;
-	    color: #fff;
-	    font-size: 14px;
+	    padding: 8px 14px;
+	    border-radius: 3px;
+	    border: 1px solid #444;
+	    background: #2a2c30;
+	    color: #ccc;
+	    font-family: 'Raleway', sans-serif;
+	    font-size: 13px;
+	    font-weight: 300;
+	    letter-spacing: 0.08em;
 	    width: 150px;
 	    display: inline-block;
+	    transition: border-color 0.2s;
+	}
+	#filters input:focus {
+	    outline: none;
+	    border-color: #c8a96e;
 	}
 	#filters input::placeholder {
-	    color: #888;
+	    color: #666;
+	    letter-spacing: 0.1em;
+	    text-transform: uppercase;
+	    font-size: 11px;
 	}
-
-	/* text inside image */
-	.thumb h2 {
-		position: absolute;
-		bottom: 30px;
-		left: 10px;
-		color: white;
-		text-shadow: 0 0 6px black;
-		font-size: 18px;
-	}
-	.thumb p {
-		position: absolute;
-		bottom: 10px;
-		left: 10px;
-		color: white;
-		text-shadow: 0 0 6px black;
-		font-size: 14px;
-	}
-	/* ⬇️ ADD HERE */
+ 
+	/* card sizing */
 	#main .thumb {
+	    position: relative;
 	    width: 25% !important;
 	    height: auto !important;
 	    min-height: 0 !important;
 	    aspect-ratio: 2 / 3 !important;
+	    overflow: hidden;
+	    cursor: pointer;
 	}
-	@media screen and (max-width: 1680px) {
-	    #main .thumb { width: 25% !important; }
+ 
+	/* remove old always-visible text */
+	.thumb h2,
+	.thumb p {
+	    display: none;
 	}
-	@media screen and (max-width: 1280px) {
-	    #main .thumb { width: 25% !important; }
+ 
+	/* image fills the card */
+	.thumb .image,
+	.thumb .image img {
+	    width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+	    display: block;
+	    transition: transform 0.5s ease;
 	}
+ 
+	/* hover: slight zoom on image */
+	.thumb:hover .image img {
+	    transform: scale(1.06);
+	}
+ 
+	/* overlay */
+	.thumb .overlay {
+	    position: absolute;
+	    inset: 0;
+	    background: rgba(10, 8, 6, 0);
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    justify-content: center;
+	    transition: background 0.4s ease;
+	    pointer-events: none;
+	}
+ 
+	.thumb:hover .overlay {
+	    background: rgba(10, 8, 6, 0.72);
+	}
+ 
+	/* overlay title */
+	.overlay .movie-title {
+	    font-family: 'Cormorant Garamond', serif;
+	    font-size: 22px;
+	    font-weight: 400;
+	    font-style: italic;
+	    color: #f5ead8;
+	    letter-spacing: 0.06em;
+	    text-align: center;
+	    padding: 0 16px;
+	    opacity: 0;
+	    transform: translateY(8px);
+	    transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+	    line-height: 1.3;
+	}
+ 
+	.thumb:hover .overlay .movie-title {
+	    opacity: 1;
+	    transform: translateY(0);
+	}
+ 
+	/* divider line */
+	.overlay .divider {
+	    width: 30px;
+	    height: 1px;
+	    background: #c8a96e;
+	    margin: 10px 0;
+	    opacity: 0;
+	    transform: scaleX(0);
+	    transition: opacity 0.3s ease 0.12s, transform 0.3s ease 0.12s;
+	}
+ 
+	.thumb:hover .overlay .divider {
+	    opacity: 1;
+	    transform: scaleX(1);
+	}
+ 
+	/* stars */
+	.overlay .stars {
+	    display: flex;
+	    gap: 3px;
+	    opacity: 0;
+	    transform: translateY(6px);
+	    transition: opacity 0.35s ease 0.18s, transform 0.35s ease 0.18s;
+	}
+ 
+	.thumb:hover .overlay .stars {
+	    opacity: 1;
+	    transform: translateY(0);
+	}
+ 
+	.overlay .stars span {
+	    font-size: 14px;
+	    line-height: 1;
+	}
+ 
+	.star-filled { color: #c8a96e; }
+	.star-empty  { color: #555; }
+ 
+	/* year badge — subtle, bottom-right */
+	.overlay .year {
+	    font-family: 'Raleway', sans-serif;
+	    font-size: 11px;
+	    font-weight: 300;
+	    letter-spacing: 0.18em;
+	    color: #888;
+	    text-transform: uppercase;
+	    position: absolute;
+	    bottom: 12px;
+	    right: 14px;
+	    opacity: 0;
+	    transition: opacity 0.35s ease 0.2s;
+	}
+ 
+	.thumb:hover .overlay .year {
+	    opacity: 1;
+	}
+ 
+	/* responsive */
 	@media screen and (max-width: 980px) {
 	    #main .thumb { width: 50% !important; }
 	}
@@ -82,11 +196,11 @@
 	}
 	</style>
 </head>
-
+ 
 <body class="is-preload">
-
+ 
 <div id="wrapper">
-
+ 
 	<!-- Header -->
 	<header id="header">
 	    <h1>ed's movie</h1>
@@ -94,180 +208,203 @@
 	<div id="filters">
 	    <input type="text" id="filter-name" placeholder="Name">
 	    <input type="number" id="filter-year" placeholder="Year">
-	    <input type="number" id="filter-rate" placeholder="Rate (1-10)">
+	    <input type="number" id="filter-rate" placeholder="Min Rate">
 	</div>
-
+ 
 	<!-- Main -->
 	<div id="main">
-
+ 
 		<article class="thumb" data-name="Talk to Her" data-year="2001" data-rate="8">
-			<div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-			<h2>Talk to Her</h2>
-			<p>2001 | Rate: 8</p>
+			<div class="image"><img src="images/thumbs/01.jpg" alt="Talk to Her" /></div>
+			<div class="overlay">
+			    <div class="movie-title">Talk to Her</div>
+			    <div class="divider"></div>
+			    <div class="stars"></div>
+			    <div class="year">2001</div>
+			</div>
 		</article>
+ 
 		<article class="thumb" data-name="No Country for Old Men" data-year="2007" data-rate="6">
-			<div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-			<h2>No Country for Old Men</h2>
-			<p>2007 | Rate: 6</p>
+			<div class="image"><img src="images/thumbs/02.jpg" alt="No Country for Old Men" /></div>
+			<div class="overlay">
+			    <div class="movie-title">No Country for Old Men</div>
+			    <div class="divider"></div>
+			    <div class="stars"></div>
+			    <div class="year">2007</div>
+			</div>
 		</article>
+ 
 		<article class="thumb" data-name="Movie 3" data-year="2003" data-rate="6">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 3</h2><p>2003 | Rate: 6</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 3" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 3</div><div class="divider"></div><div class="stars"></div><div class="year">2003</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 4" data-year="2004" data-rate="9">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 4</h2><p>2004 | Rate: 9</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 4" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 4</div><div class="divider"></div><div class="stars"></div><div class="year">2004</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 5" data-year="2005" data-rate="5">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 5</h2><p>2005 | Rate: 5</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 5" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 5</div><div class="divider"></div><div class="stars"></div><div class="year">2005</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 6" data-year="2006" data-rate="8">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 6</h2><p>2006 | Rate: 8</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 6" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 6</div><div class="divider"></div><div class="stars"></div><div class="year">2006</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 7" data-year="2007" data-rate="7">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 7</h2><p>2007 | Rate: 7</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 7" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 7</div><div class="divider"></div><div class="stars"></div><div class="year">2007</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 8" data-year="2008" data-rate="6">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 8</h2><p>2008 | Rate: 6</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 8" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 8</div><div class="divider"></div><div class="stars"></div><div class="year">2008</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 9" data-year="2009" data-rate="9">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 9</h2><p>2009 | Rate: 9</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 9" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 9</div><div class="divider"></div><div class="stars"></div><div class="year">2009</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 10" data-year="2010" data-rate="8">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 10</h2><p>2010 | Rate: 8</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 10" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 10</div><div class="divider"></div><div class="stars"></div><div class="year">2010</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 11" data-year="2011" data-rate="7">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 11</h2><p>2011 | Rate: 7</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 11" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 11</div><div class="divider"></div><div class="stars"></div><div class="year">2011</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 12" data-year="2012" data-rate="5">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 12</h2><p>2012 | Rate: 5</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 12" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 12</div><div class="divider"></div><div class="stars"></div><div class="year">2012</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 13" data-year="2013" data-rate="8">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 13</h2><p>2013 | Rate: 8</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 13" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 13</div><div class="divider"></div><div class="stars"></div><div class="year">2013</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 14" data-year="2014" data-rate="6">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 14</h2><p>2014 | Rate: 6</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 14" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 14</div><div class="divider"></div><div class="stars"></div><div class="year">2014</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 15" data-year="2015" data-rate="9">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 15</h2><p>2015 | Rate: 9</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 15" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 15</div><div class="divider"></div><div class="stars"></div><div class="year">2015</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 16" data-year="2016" data-rate="7">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 16</h2><p>2016 | Rate: 7</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 16" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 16</div><div class="divider"></div><div class="stars"></div><div class="year">2016</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 17" data-year="2017" data-rate="8">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 17</h2><p>2017 | Rate: 8</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 17" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 17</div><div class="divider"></div><div class="stars"></div><div class="year">2017</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 18" data-year="2018" data-rate="6">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 18</h2><p>2018 | Rate: 6</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 18" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 18</div><div class="divider"></div><div class="stars"></div><div class="year">2018</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 19" data-year="2019" data-rate="5">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 19</h2><p>2019 | Rate: 5</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 19" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 19</div><div class="divider"></div><div class="stars"></div><div class="year">2019</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 20" data-year="2020" data-rate="9">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 20</h2><p>2020 | Rate: 9</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 20" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 20</div><div class="divider"></div><div class="stars"></div><div class="year">2020</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 21" data-year="2021" data-rate="7">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 21</h2><p>2021 | Rate: 7</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 21" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 21</div><div class="divider"></div><div class="stars"></div><div class="year">2021</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 22" data-year="2022" data-rate="8">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 22</h2><p>2022 | Rate: 8</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 22" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 22</div><div class="divider"></div><div class="stars"></div><div class="year">2022</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 23" data-year="2023" data-rate="6">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 23</h2><p>2023 | Rate: 6</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 23" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 23</div><div class="divider"></div><div class="stars"></div><div class="year">2023</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 24" data-year="2024" data-rate="9">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 24</h2><p>2024 | Rate: 9</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 24" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 24</div><div class="divider"></div><div class="stars"></div><div class="year">2024</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 25" data-year="2000" data-rate="7">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 25</h2><p>2000 | Rate: 7</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 25" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 25</div><div class="divider"></div><div class="stars"></div><div class="year">2000</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 26" data-year="1999" data-rate="8">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 26</h2><p>1999 | Rate: 8</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 26" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 26</div><div class="divider"></div><div class="stars"></div><div class="year">1999</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 27" data-year="1998" data-rate="5">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 27</h2><p>1998 | Rate: 5</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 27" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 27</div><div class="divider"></div><div class="stars"></div><div class="year">1998</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 28" data-year="1997" data-rate="9">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 28</h2><p>1997 | Rate: 9</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 28" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 28</div><div class="divider"></div><div class="stars"></div><div class="year">1997</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 29" data-year="1996" data-rate="6">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 29</h2><p>1996 | Rate: 6</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 29" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 29</div><div class="divider"></div><div class="stars"></div><div class="year">1996</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 30" data-year="1995" data-rate="8">
-		    <div class="image"><img src="images/thumbs/03.jpg" alt="" /></div>
-		    <h2>Movie 30</h2><p>1995 | Rate: 8</p>
+		    <div class="image"><img src="images/thumbs/03.jpg" alt="Movie 30" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 30</div><div class="divider"></div><div class="stars"></div><div class="year">1995</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 31" data-year="1994" data-rate="7">
-		    <div class="image"><img src="images/thumbs/01.jpg" alt="" /></div>
-		    <h2>Movie 31</h2><p>1994 | Rate: 7</p>
+		    <div class="image"><img src="images/thumbs/01.jpg" alt="Movie 31" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 31</div><div class="divider"></div><div class="stars"></div><div class="year">1994</div></div>
 		</article>
 		<article class="thumb" data-name="Movie 32" data-year="1993" data-rate="9">
-		    <div class="image"><img src="images/thumbs/02.jpg" alt="" /></div>
-		    <h2>Movie 32</h2><p>1993 | Rate: 9</p>
+		    <div class="image"><img src="images/thumbs/02.jpg" alt="Movie 32" /></div>
+		    <div class="overlay"><div class="movie-title">Movie 32</div><div class="divider"></div><div class="stars"></div><div class="year">1993</div></div>
 		</article>
-
+ 
 	</div>
-
+ 
 </div>
-
+ 
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-
+ 
 <script>
+// ── Build stars ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.thumb').forEach(card => {
+    const rate = parseInt(card.dataset.rate, 10);
+    const starsEl = card.querySelector('.stars');
+    if (!starsEl) return;
+    let html = '';
+    for (let i = 1; i <= 10; i++) {
+        html += `<span class="${i <= rate ? 'star-filled' : 'star-empty'}">★</span>`;
+    }
+    starsEl.innerHTML = html;
+});
+ 
+// ── Filter ───────────────────────────────────────────────────────────────────
 const nameInput = document.getElementById('filter-name');
 const yearInput = document.getElementById('filter-year');
 const rateInput = document.getElementById('filter-rate');
 const items = document.querySelectorAll('.thumb');
-
+ 
 function filter() {
-	const name = nameInput.value.toLowerCase();
-	const year = yearInput.value;
-	const rate = rateInput.value;
-
-	items.forEach(item => {
-		const n = item.dataset.name.toLowerCase();
-		const y = item.dataset.year;
-		const r = item.dataset.rate;
-		let show = true;
-		if (name && !n.includes(name)) show = false;
-		if (year && y !== year) show = false;
-		if (rate && r < rate) show = false;
-		item.style.display = show ? '' : 'none';
-	});
+    const name = nameInput.value.toLowerCase();
+    const year = yearInput.value;
+    const rate = rateInput.value;
+ 
+    items.forEach(item => {
+        const n = item.dataset.name.toLowerCase();
+        const y = item.dataset.year;
+        const r = parseInt(item.dataset.rate, 10);
+        let show = true;
+        if (name && !n.includes(name)) show = false;
+        if (year && y !== year) show = false;
+        if (rate && r < parseInt(rate, 10)) show = false;
+        item.style.display = show ? '' : 'none';
+    });
 }
-
+ 
 nameInput.addEventListener('input', filter);
 yearInput.addEventListener('input', filter);
 rateInput.addEventListener('input', filter);
 </script>
-
+ 
 </body>
 </html>
